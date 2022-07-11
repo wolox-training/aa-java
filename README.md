@@ -1,1 +1,1 @@
-# aa-java Trainee
+# aa-java
