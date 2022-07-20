@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import wolox.training.models.Book;
 
+import java.util.Optional;
+
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-
-    Book findFirstByAuthor(String author);
+    Optional<Book> findFirstByAuthor(String author);
 }
