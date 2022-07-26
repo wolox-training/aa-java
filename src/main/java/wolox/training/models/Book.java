@@ -2,6 +2,9 @@ package wolox.training.models;
 
 import javax.persistence.*;
 
+/**
+ * The book object contains main details about a Book.
+ */
 @Entity
 public class Book {
 
