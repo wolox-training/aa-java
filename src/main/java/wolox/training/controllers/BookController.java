@@ -13,7 +13,7 @@ import wolox.training.repositories.BookRepository;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/books")
 public class BookController {
 
@@ -64,7 +64,7 @@ public class BookController {
     }
 
     /**
-     * Creates a new customer
+     * Creates a new book
      * @param book: The details of the new book (Book)
      * @return the book details after creating
      */

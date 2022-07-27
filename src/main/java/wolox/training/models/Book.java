@@ -1,6 +1,9 @@
 package wolox.training.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The book object contains main details about a Book.
@@ -10,7 +13,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String title;
@@ -39,6 +42,9 @@ public class Book {
     @Column(nullable = false)
     private String isbn;
 
+    @ManyToMany(mappedBy = "books")
+    public List<User> users;
+
     public Book(String title, String subtitle, String author, String genre, String image, String publisher, String year, Integer pages, String isbn) {
         this.title = title;
         this.subtitle = subtitle;
@@ -49,6 +55,7 @@ public class Book {
         this.year = year;
         this.pages = pages;
         this.isbn = isbn;
+        this.users = new ArrayList<>();
     }
 
     public Book() {
@@ -128,5 +135,13 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public List<User> getUsers() {
+        return (List<User>) Collections.unmodifiableList(users);
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

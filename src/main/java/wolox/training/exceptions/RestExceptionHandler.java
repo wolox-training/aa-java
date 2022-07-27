@@ -24,6 +24,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler({ BookAlreadyOwnedException.class })
+    protected ResponseEntity<Object> handleAlreadyOwned(
+            Exception ex, WebRequest request) {
+        return handleExceptionInternal(ex, "Book already exists",
+                new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
     @ExceptionHandler({ BookIdMismatchException.class,
             ConstraintViolationException.class,
             DataIntegrityViolationException.class })
