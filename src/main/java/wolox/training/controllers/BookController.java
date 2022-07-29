@@ -13,7 +13,7 @@ import wolox.training.repositories.BookRepository;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/books")
 public class BookController {
 

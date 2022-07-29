@@ -16,7 +16,7 @@ import wolox.training.repositories.UserRepository;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/users")
 public class UserController {
 
