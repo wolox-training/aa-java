@@ -1,5 +1,8 @@
 package wolox.training.models;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +11,7 @@ import java.util.List;
 /**
  * The book object contains main details about a Book.
  */
+@ApiModel(description = "Books from the data base")
 @Entity
 public class Book {
 
@@ -15,30 +19,39 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ApiModelProperty(notes = "The book title", required = true)
     @Column(nullable = false, unique = true)
     private String title;
 
+    @ApiModelProperty(notes = "Short description about the book", required = true)
     @Column(nullable = false)
     private String subtitle;
 
+    @ApiModelProperty(notes = "Full name of the author of the book", required = true)
     @Column(nullable = false)
     private String author;
 
+    @ApiModelProperty(notes = "Genre of the book", required = true)
     @Column(nullable = false)
     private String genre;
 
+    @ApiModelProperty(notes = "Front page image of the book", required = true)
     @Column(nullable = false)
     private String image;
 
+    @ApiModelProperty(notes = "The company in charge of the book selling", required = true)
     @Column(nullable = false)
     private String publisher;
 
+    @ApiModelProperty(notes = "The year were the book was published", required = true)
     @Column(nullable = false)
     private String year;
 
+    @ApiModelProperty(notes = "The amount of pages the book contains", required = true)
     @Column(nullable = false)
     private Integer pages;
 
+    @ApiModelProperty(notes = "Product identifier", required = true)
     @Column(nullable = false)
     private String isbn;
 

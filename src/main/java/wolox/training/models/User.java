@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * The user object contains main details about a User.
  */
-
 @Entity
 @Table(name = "users")
 public class User {
