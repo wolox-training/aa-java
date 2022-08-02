@@ -1,5 +1,9 @@
 package wolox.training.controllers;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
+@Api(tags = "Books")
 public class BookController {
 
     @Autowired
@@ -37,6 +42,13 @@ public class BookController {
      * @return a list of books
      */
     @GetMapping
+    @ApiOperation(value = "Returns all books that respond to a filter", response = Book[].class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Access forbidden"),
+            @ApiResponse(code = 404, message = "Book not found")
+    })
     public Iterable findAll() {
         return bookRepository.findAll();
     }
@@ -47,6 +59,13 @@ public class BookController {
      * @return book searched with the attributes passed as parameters
      */
     @GetMapping("/title/{title}")
+    @ApiOperation(value = "Returns one book according to its tittle", response = Book.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Access forbidden"),
+            @ApiResponse(code = 404, message = "Book Not Found"),
+    })
     public Optional<Book> findBookByTitle(@PathVariable String title) {
         return bookRepository.findByTitle(title);
     }
@@ -58,6 +77,13 @@ public class BookController {
      * @throws BookNotFoundException if the repository can't find the object
      */
     @GetMapping("/{id}")
+    @ApiOperation(value = "Returns one book according to its id", response = Book.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Access forbidden"),
+            @ApiResponse(code = 404, message = "Book Not Found"),
+    })
     public Book findBookById(@PathVariable Long id) {
         return bookRepository.findById(id)
                 .orElseThrow(BookNotFoundException::new);
@@ -69,6 +95,13 @@ public class BookController {
      * @return the book details after creating
      */
     @PostMapping
+    @ApiOperation(value = "Creates a book", response = Book.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Access forbidden"),
+            @ApiResponse(code = 404, message = "Book Not Found"),
+    })
     @ResponseStatus(HttpStatus.CREATED)
     public Book createBook(@RequestBody Book book) {
         return bookRepository.save(book);
@@ -80,6 +113,13 @@ public class BookController {
      * @throws BookNotFoundException if the repository can't find the object
      */
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletes a book from db according to its id", response = Book.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Access forbidden"),
+            @ApiResponse(code = 404, message = "Book Not Found"),
+    })
     public void deleteBook(@PathVariable Long id) {
         bookRepository.findById(id)
                 .orElseThrow(BookNotFoundException::new);
@@ -95,6 +135,13 @@ public class BookController {
      * @return book updated with the attributes passed as parameters
      */
     @PutMapping("/{id}")
+    @ApiOperation(value = "Updates a book", response = Book.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Access forbidden"),
+            @ApiResponse(code = 404, message = "Book Not Found"),
+    })
     public Book updateBook(@RequestBody Book book, @PathVariable Long id) {
         if (book.getId() != id) {
             throw new BookIdMismatchException();
