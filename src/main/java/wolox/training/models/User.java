@@ -1,5 +1,6 @@
 package wolox.training.models;
 
+import com.google.common.base.Preconditions;
 import com.sun.istack.NotNull;
 import wolox.training.exceptions.BookAlreadyOwnedException;
 import wolox.training.exceptions.BookNotFoundException;
@@ -10,10 +11,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * The user object contains main details about a User.
  */
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -57,7 +59,8 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        Preconditions.checkArgument(username.length() > 1, "The username must have more than 1 character");
+        this.username = checkNotNull(username);
     }
 
     public String getName() {
@@ -65,7 +68,7 @@ public class User {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = checkNotNull(name);
     }
 
     public LocalDate getBirthdate() {
@@ -73,7 +76,7 @@ public class User {
     }
 
     public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
+        this.birthdate = checkNotNull(birthdate);
     }
 
     /**
@@ -85,7 +88,7 @@ public class User {
     }
 
     public void setBooks(List<Book> books) {
-        this.books = books;
+        this.books = checkNotNull(books);
     }
 
     /**

@@ -17,10 +17,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         super();
     }
 
-    @ExceptionHandler({ BookNotFoundException.class })
+    @ExceptionHandler({ BookNotFoundException.class, UserNotFoundException.class })
     protected ResponseEntity<Object> handleNotFound(
             Exception ex, WebRequest request) {
-        return handleExceptionInternal(ex, "Book not found",
+        return handleExceptionInternal(ex, "Not found",
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
@@ -31,7 +31,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
-    @ExceptionHandler({ BookIdMismatchException.class,
+    @ExceptionHandler({ BookIdMismatchException.class, UserIdMismatchException.class,
             ConstraintViolationException.class,
             DataIntegrityViolationException.class })
     public ResponseEntity<Object> handleBadRequest(
