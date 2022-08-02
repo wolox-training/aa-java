@@ -5,9 +5,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import wolox.training.models.Book;
 
+import java.util.Optional;
+
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Query(value="SELECT * FROM Book ORDER BY anyField DESC LIMIT 1", nativeQuery = true)
-    Book findBookByAuthor(String author);
+    Optional<Book> findFirstByAuthor(String author);
+    Optional<Book> findByTitle(String title);
 }
