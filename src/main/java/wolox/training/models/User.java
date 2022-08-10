@@ -37,20 +37,19 @@ public class User {
     public LocalDate birthdate;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    public List<Book> books;
+    public List<Book> books = new ArrayList<>();
 
 
     public User(String username, String name, LocalDate birthdate) {
         this.username = username;
         this.name = name;
         this.birthdate = birthdate;
-        this.books = new ArrayList<>();
     }
 
     public User() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

@@ -17,6 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @ApiModel(description = "Books from the data base")
 @Entity
+@Table(name = "books")
 public class Book {
 
     @Id
@@ -59,9 +60,6 @@ public class Book {
     @Column(nullable = false)
     private String isbn;
 
-    @ManyToMany(mappedBy = "books")
-    public List<User> users;
-
     public Book(String title, String subtitle, String author, String genre, String image, String publisher, String year, Integer pages, String isbn) {
         this.title = title;
         this.subtitle = subtitle;
@@ -72,13 +70,12 @@ public class Book {
         this.year = year;
         this.pages = pages;
         this.isbn = isbn;
-        this.users = new ArrayList<>();
     }
 
     public Book() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -160,13 +157,5 @@ public class Book {
     public void setIsbn(String isbn) {
         Preconditions.checkArgument(isbn.matches("[0-9]+"), "The isbn field must contain only numbers");
         this.isbn = checkNotNull(isbn);
-    }
-
-    public List<User> getUsers() {
-        return (List<User>) Collections.unmodifiableList(users);
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 }
