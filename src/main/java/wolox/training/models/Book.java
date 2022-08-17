@@ -1,41 +1,62 @@
 package wolox.training.models;
 
+import com.google.common.base.Preconditions;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The book object contains main details about a Book.
  */
+@ApiModel(description = "Books from the data base")
 @Entity
+@Table(name = "books")
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
+    @ApiModelProperty(notes = "The book title", required = true)
     @Column(nullable = false, unique = true)
     private String title;
 
+    @ApiModelProperty(notes = "Short description about the book", required = true)
     @Column(nullable = false)
     private String subtitle;
 
+    @ApiModelProperty(notes = "Full name of the author of the book", required = true)
     @Column(nullable = false)
     private String author;
 
+    @ApiModelProperty(notes = "Genre of the book", required = true)
     @Column(nullable = false)
     private String genre;
 
+    @ApiModelProperty(notes = "Front page image of the book", required = true)
     @Column(nullable = false)
     private String image;
 
+    @ApiModelProperty(notes = "The company in charge of the book selling", required = true)
     @Column(nullable = false)
     private String publisher;
 
+    @ApiModelProperty(notes = "The year were the book was published", required = true)
     @Column(nullable = false)
     private String year;
 
+    @ApiModelProperty(notes = "The amount of pages the book contains", required = true)
     @Column(nullable = false)
     private Integer pages;
 
+    @ApiModelProperty(notes = "Product identifier", required = true)
     @Column(nullable = false)
     private String isbn;
 
@@ -54,7 +75,7 @@ public class Book {
     public Book() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -63,7 +84,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = checkNotNull(title);
     }
 
     public String getSubtitle() {
@@ -71,7 +92,7 @@ public class Book {
     }
 
     public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
+        this.subtitle = checkNotNull(subtitle);
     }
 
     public String getAuthor() {
@@ -79,6 +100,7 @@ public class Book {
     }
 
     public void setAuthor(String author) {
+        Preconditions.checkArgument(!author.isEmpty(), "The author name cannot be empty");
         this.author = author;
     }
 
@@ -87,7 +109,8 @@ public class Book {
     }
 
     public void setGenre(String genre) {
-        this.genre = genre;
+        Preconditions.checkArgument(genre.length() > 1, "The genre field must have more than 1 character");
+        this.genre = checkNotNull(genre);
     }
 
     public String getImage() {
@@ -95,7 +118,7 @@ public class Book {
     }
 
     public void setImage(String image) {
-        this.image = image;
+        this.image = checkNotNull(image);
     }
 
     public String getPublisher() {
@@ -103,6 +126,7 @@ public class Book {
     }
 
     public void setPublisher(String publisher) {
+        Preconditions.checkArgument(!publisher.isEmpty(), "The publisher name cannot be empty");
         this.publisher = publisher;
     }
 
@@ -111,7 +135,10 @@ public class Book {
     }
 
     public void setYear(String year) {
-        this.year = year;
+        Preconditions.checkArgument(year.matches("[0-9]+"), "The year field must contain only numbers");
+        Preconditions.checkArgument(Integer.valueOf(year) <= LocalDateTime.now().getYear(),
+                "The year field must be less than or equal to the current year");
+        this.year = checkNotNull(year);
     }
 
     public Integer getPages() {
@@ -119,7 +146,8 @@ public class Book {
     }
 
     public void setPages(Integer pages) {
-        this.pages = pages;
+        Preconditions.checkArgument(pages > 1, "The pages must be more than 1");
+        this.pages = checkNotNull(pages);
     }
 
     public String getIsbn() {
@@ -127,6 +155,7 @@ public class Book {
     }
 
     public void setIsbn(String isbn) {
-        this.isbn = isbn;
+        Preconditions.checkArgument(isbn.matches("[0-9]+"), "The isbn field must contain only numbers");
+        this.isbn = checkNotNull(isbn);
     }
 }
