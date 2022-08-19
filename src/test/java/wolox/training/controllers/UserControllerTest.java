@@ -131,4 +131,25 @@ class UserControllerTest {
 
         assertEquals(expected, result);
     }
+
+    @Test
+    void whenAddBookToList_thenThrowNotFoundBookException() throws Exception {
+        Mockito.when(userRepository.findById(Long.valueOf(1))).thenReturn(Optional.of(userTest));
+        Mockito.when(bookRepository.findById(Long.valueOf(1))).thenReturn(Optional.empty());
+
+        mvc.perform(MockMvcRequestBuilders.post(API_USERS.concat(String.valueOf(Long.valueOf(1)).concat("/books/").concat(String.valueOf(Long.valueOf(1)))))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void whenRemoveBookToList_thenThrowNotFoundBookException() throws Exception {
+        Mockito.when(userRepository.findById(Long.valueOf(1))).thenReturn(Optional.of(userTest));
+        Mockito.when(userRepository.save(any())).thenReturn(userTest);
+        Mockito.when(bookRepository.findById(Long.valueOf(1))).thenReturn(Optional.empty());
+
+        mvc.perform(MockMvcRequestBuilders.delete(API_USERS.concat(String.valueOf(Long.valueOf(1)).concat("/books/").concat(String.valueOf(Long.valueOf(1)))))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }
