@@ -19,16 +19,16 @@ class BookRepositoryTest {
 
     @Test
     public void whenFindFirstByAuthor_thenReturnSaveSuccess() {
-        Optional<Book> author = bookRepository.findFirstByAuthor("Stephen King");
+        Optional<Book> book = bookRepository.findFirstByAuthor("Stephen King");
 
-        assertEquals("Stephen King", author.get().getAuthor());
+        assertFalse(book.isPresent());
     }
 
     @Test
     public void whenFindByTitle_thenNoBookReturn(){
         Optional<Book> book = bookRepository.findByTitle("Misery");
 
-        assertTrue(book.isPresent());
+        assertFalse(book.isPresent());
     }
 
     @Test

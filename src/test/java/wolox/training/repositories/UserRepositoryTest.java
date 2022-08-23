@@ -22,12 +22,13 @@ class UserRepositoryTest {
     public void whenFindFirstByName_thenReturnSaveSuccess() {
         Optional<User> name = userRepository.findFirstByName("Alexa");
 
-        assertEquals("Alexa", name.get().getName());
+        assertFalse(name.isPresent());
     }
 
     @Test
     public void whenFindById_thenNoBookReturn(){
         Optional<User> user = userRepository.findById(Long.valueOf(1));
-        assertTrue(user.isPresent());
+
+        assertFalse(user.isPresent());
     }
 }
