@@ -1,5 +1,6 @@
 package wolox.training.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.base.Preconditions;
 import com.sun.istack.NotNull;
 import wolox.training.exceptions.BookAlreadyOwnedException;
@@ -34,6 +35,7 @@ public class User {
 
     @NotNull
     @Column(nullable = false, unique = true)
+    @JsonFormat(pattern="yyyy-MM-dd")
     public LocalDate birthdate;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
