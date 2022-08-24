@@ -4,25 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDTO {
-
+    private String isbn;
     private String title;
     private String subtitle;
     private List<String> publishers;
     private String publishDate;
-    private Integer numberOfPages;
+    private Integer numberPages;
     private List<String> authors;
-    private String isbn;
 
     public BookDTO() {
     }
 
-    public BookDTO(String title, String subtitle, String publishDate, Integer numberOfPages, String isbn) {
+    public BookDTO(String isbn, String title, String subtitle, String publishDate, Integer numberPages) {
+        this.isbn = isbn;
         this.title = title;
         this.subtitle = subtitle;
         this.publishers = new ArrayList<>();
         this.publishDate = publishDate;
-        this.numberOfPages = numberOfPages;
+        this.numberPages = numberPages;
         this.authors = new ArrayList<>();
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -58,12 +65,12 @@ public class BookDTO {
         this.publishDate = publishDate;
     }
 
-    public Integer getNumberOfPages() {
-        return numberOfPages;
+    public Integer getNumberPages() {
+        return numberPages;
     }
 
-    public void setNumberOfPages(Integer numberOfPages) {
-        this.numberOfPages = numberOfPages;
+    public void setNumberPages(Integer numberPages) {
+        this.numberPages = numberPages;
     }
 
     public List<String> getAuthors() {
@@ -72,26 +79,5 @@ public class BookDTO {
 
     public void setAuthors(List<String> authors) {
         this.authors = authors;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    @Override
-    public String toString() {
-        return "BookDTO{" +
-                "title='" + title + '\'' +
-                ", subtitle='" + subtitle + '\'' +
-                ", publishers=" + publishers +
-                ", publishDate='" + publishDate + '\'' +
-                ", numberOfPages=" + numberOfPages +
-                ", authors=" + authors +
-                ", isbn='" + isbn + '\'' +
-                '}';
     }
 }

@@ -37,7 +37,7 @@ public class OpenLibraryService {
         book.setAuthors(Collections.singletonList(jsonNode.path("authors").findPath("name").asText()));
         book.setPublishDate(jsonNode.path("publish_date").asText());
         book.setPublishers(Collections.singletonList(jsonNode.path("publishers").findPath("name").asText()));
-        book.setNumberOfPages(Integer.parseInt(jsonNode.path("number_of_pages").asText()));
+        book.setNumberPages(Integer.parseInt(jsonNode.path("number_of_pages").asText()));
         book.setIsbn(isbn);
 
         return book;
@@ -76,7 +76,7 @@ public class OpenLibraryService {
                 "No image",
                 String.valueOf(bookDto.getPublishers()),
                 bookDto.getPublishDate(),
-                bookDto.getNumberOfPages(),
+                bookDto.getNumberPages(),
                 bookDto.getIsbn());
         bookRepository.save(newBook);
 
