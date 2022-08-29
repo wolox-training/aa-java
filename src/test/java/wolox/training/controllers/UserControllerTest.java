@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(UserController.class)
+@WebMvcTest(value = UserController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 class UserControllerTest {
 
     @Autowired
@@ -56,6 +57,7 @@ class UserControllerTest {
         userTest = new User();
         userTest.setUsername("Jack");
         userTest.setName("Black");
+        userTest.setPassword("123456");
         userTest.setBirthdate(LocalDate.parse("1996-05-10"));
 
         listUsers.add(userTest);
@@ -101,6 +103,7 @@ class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
+        System.out.println(result);
 
         assertEquals(expected, result);
     }

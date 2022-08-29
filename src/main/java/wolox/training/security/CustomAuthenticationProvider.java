@@ -6,7 +6,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 import wolox.training.models.User;
 import wolox.training.repositories.UserRepository;
@@ -19,8 +19,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     public UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public Authentication authenticate (Authentication authentication) throws AuthenticationException {
@@ -28,7 +27,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         Optional<User> user = userRepository.findByUsername(name);
         String password = authentication.getCredentials().toString();
 
-        if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
+        if (user.isPresent() && BCrypt.checkpw(password, user.get().getPassword())) {
             return new UsernamePasswordAuthenticationToken(
                     user.get().getUsername(), password, new ArrayList<>());
         } else {
