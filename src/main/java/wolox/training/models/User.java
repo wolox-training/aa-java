@@ -34,7 +34,7 @@ public class User {
     public String username;
 
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 
     @NotNull

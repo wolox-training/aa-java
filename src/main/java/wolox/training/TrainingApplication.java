@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableJpaRepositories
 @EnableWebMvc
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication
 public class TrainingApplication {
 
     public static void main(String[] args) {
