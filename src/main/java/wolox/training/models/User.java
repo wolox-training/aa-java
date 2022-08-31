@@ -1,8 +1,12 @@
 package wolox.training.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 import com.sun.istack.NotNull;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import wolox.training.exceptions.BookAlreadyOwnedException;
 import wolox.training.exceptions.BookNotFoundException;
 
@@ -30,6 +34,10 @@ public class User {
     public String username;
 
     @NotNull
+    @Column(nullable = false)
+    private String password;
+
+    @NotNull
     @Column(nullable = false, unique = true)
     public String name;
 
@@ -42,8 +50,9 @@ public class User {
     public List<Book> books = new ArrayList<>();
 
 
-    public User(String username, String name, LocalDate birthdate) {
+    public User(String username, String password, String name, LocalDate birthdate) {
         this.username = username;
+        this.password = password;
         this.name = name;
         this.birthdate = birthdate;
     }
@@ -62,6 +71,15 @@ public class User {
     public void setUsername(String username) {
         Preconditions.checkArgument(username.length() > 1, "The username must have more than 1 character");
         this.username = checkNotNull(username);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        Preconditions.checkArgument(password != null && !password.isEmpty());
+        this.password = password;
     }
 
     public String getName() {
